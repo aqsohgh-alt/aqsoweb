@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f7fb">
+    <title>KasirKita — Sistem Kasir</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="#" aria-label="KasirKita Beranda"><span class="brand-mark">K</span><span>kasir<span class="brand-accent">kita</span></span></a>
+            <div class="store-badge"><span class="store-avatar">S</span><span><strong>Studio Store</strong><small>Gerai utama</small></span><span class="chevron">⌄</span></div>
+            <span class="nav-label">MENU UTAMA</span>
+            <nav class="side-nav" aria-label="Navigasi utama">
+                <button class="nav-item active" data-page="kasir"><span class="nav-icon">▦</span>Kasir</button>
+                <button class="nav-item" data-page="produk"><span class="nav-icon">▤</span>Produk & Stok</button>
+                <button class="nav-item" data-page="transaksi"><span class="nav-icon">↗</span>Riwayat transaksi</button>
+            </nav>
+            <div class="sidebar-bottom">
+                <div class="help-card"><span class="help-icon">✦</span><strong>Butuh bantuan?</strong><p>Kelola toko lebih mudah dengan KasirKita.</p><button id="help-button">Pelajari cara kerja <span>→</span></button></div>
+                <div class="profile"><span class="profile-avatar">A</span><span><strong>Admin Toko</strong><small>Administrator</small></span><button aria-label="Menu profil">•••</button></div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="mobile-brand"><span class="brand-mark">K</span> KasirKita</div>
+                <div class="breadcrumb"><span>Workspace</span><span class="crumb-separator">/</span><strong id="breadcrumb-current">Kasir</strong></div>
+                <div class="topbar-right"><span class="today-label" id="today-label"></span><span class="top-avatar">A</span></div>
+            </header>
+
+            <section class="page active" id="page-kasir">
+                <div class="page-heading">
+                    <div><p class="eyebrow">TOKO ANDA, LEBIH PRAKTIS</p><h1>Selamat datang, Admin! <span class="wave">✦</span></h1><p class="subheading">Pantau toko dan layani pelanggan dengan mudah.</p></div>
+                    <button class="button button-primary" id="quick-add-product"><span>＋</span> Tambah produk</button>
+                </div>
+                <div class="stats-grid">
+                    <article class="stat-card"><div class="stat-top"><span class="stat-icon mint">Rp</span><span class="stat-trend">Hari ini</span></div><p>Total penjualan</p><strong id="stat-sales">Rp0</strong><small id="stat-sales-note">Belum ada transaksi hari ini</small></article>
+                    <article class="stat-card"><div class="stat-top"><span class="stat-icon lavender">↗</span><span class="stat-trend neutral">Hari ini</span></div><p>Transaksi</p><strong id="stat-transactions">0</strong><small>Transaksi berhasil</small></article>
+                    <article class="stat-card"><div class="stat-top"><span class="stat-icon peach">▤</span><span class="stat-trend neutral">Katalog</span></div><p>Total produk</p><strong id="stat-products">0</strong><small>Produk tersedia di toko</small></article>
+                    <article class="stat-card"><div class="stat-top"><span class="stat-icon yellow">!</span><span class="stat-trend warning">Perlu dicek</span></div><p>Stok menipis</p><strong id="stat-low-stock">0</strong><small>Produk dengan stok ≤ 5</small></article>
+                </div>
+
+                <div class="workspace-grid">
+                    <section class="catalog-panel panel">
+                        <div class="panel-heading"><div><h2>Pilih produk</h2><p>Pilih produk untuk ditambahkan ke keranjang.</p></div><span class="live-indicator"><i></i> Siap melayani</span></div>
+                        <label class="search-box"><span>⌕</span><input id="product-search" type="search" placeholder="Cari nama produk..." autocomplete="off"><kbd>⌘ K</kbd></label>
+                        <div class="category-list" id="category-list" aria-label="Filter kategori"></div>
+                        <div class="product-grid" id="product-grid"></div>
+                        <div class="empty-state hidden" id="empty-products"><span>⌕</span><strong>Produk tidak ditemukan</strong><p>Coba kata kunci atau kategori lain.</p></div>
+                    </section>
+                    <aside class="cart-panel panel">
+                        <div class="cart-heading"><div><h2>Keranjang</h2><p id="cart-count">0 item</p></div><button class="text-button" id="clear-cart">Kosongkan</button></div>
+                        <div class="cart-items" id="cart-items"></div>
+                        <div class="cart-empty" id="cart-empty"><span class="cart-empty-icon">🛍</span><strong>Keranjang masih kosong</strong><p>Pilih produk untuk memulai transaksi.</p></div>
+                        <div class="cart-summary">
+                            <div class="summary-line"><span>Subtotal</span><strong id="cart-subtotal">Rp0</strong></div>
+                            <div class="summary-line"><span>Pajak</span><span class="tax-label">Tidak dikenakan</span></div>
+                            <div class="summary-line total-line"><span>Total pembayaran</span><strong id="cart-total">Rp0</strong></div>
+                            <button class="button button-primary checkout-button" id="checkout-button" disabled>Lanjut pembayaran <span>→</span></button>
+                            <p class="secure-note"><span>✓</span> Transaksi tersimpan otomatis</p>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+
+            <section class="page" id="page-produk">
+                <div class="page-heading"><div><p class="eyebrow">KATALOG TOKO</p><h1>Produk & stok</h1><p class="subheading">Kelola produk, harga, dan ketersediaan stok toko.</p></div><button class="button button-primary" id="add-product-button"><span>＋</span> Tambah produk</button></div>
+                <div class="panel table-panel">
+                    <div class="table-toolbar"><label class="search-box"><span>⌕</span><input id="inventory-search" type="search" placeholder="Cari produk..."></label><span class="result-count" id="inventory-count"></span></div>
+                    <div class="table-wrap"><table><thead><tr><th>PRODUK</th><th>KATEGORI</th><th>HARGA</th><th>STOK</th><th>STATUS</th><th></th></tr></thead><tbody id="inventory-body"></tbody></table></div>
+                    <div class="empty-state hidden" id="empty-inventory"><span>▤</span><strong>Produk belum tersedia</strong><p>Tambahkan produk pertama untuk mulai berjualan.</p></div>
+                </div>
+            </section>
+
+            <section class="page" id="page-transaksi">
+                <div class="page-heading"><div><p class="eyebrow">CATATAN PENJUALAN</p><h1>Riwayat transaksi</h1><p class="subheading">Lihat kembali transaksi yang sudah selesai.</p></div></div>
+                <div class="history-summary"><div class="history-summary-icon">↗</div><div><span>Total transaksi tersimpan</span><strong id="history-total">0</strong></div><div class="history-summary-divider"></div><div><span>Total penjualan</span><strong id="history-sales">Rp0</strong></div></div>
+                <div class="panel table-panel">
+                    <div class="table-toolbar"><label class="search-box"><span>⌕</span><input id="history-search" type="search" placeholder="Cari nomor transaksi..."></label><span class="result-count" id="history-count"></span></div>
+                    <div class="table-wrap"><table><thead><tr><th>NO. TRANSAKSI</th><th>TANGGAL & WAKTU</th><th>ITEM</th><th>METODE</th><th>TOTAL</th><th></th></tr></thead><tbody id="history-body"></tbody></table></div>
+                    <div class="empty-state hidden" id="empty-history"><span>↗</span><strong>Belum ada transaksi</strong><p>Transaksi yang selesai akan muncul di sini.</p></div>
+                </div>
+            </section>
+            <footer class="app-footer">KasirKita <span>•</span> Simpel untuk setiap transaksi.</footer>
+        </main>
+    </div>
+
+    <div class="modal-backdrop hidden" id="modal-backdrop">
+        <section class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"></section>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+</body>
+</html>
